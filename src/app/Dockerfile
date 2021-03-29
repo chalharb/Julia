@@ -1,11 +1,18 @@
-FROM node:15.12.0-alpine3.10
+FROM node:15.12.0-alpine3.10 AS base
 
-WORKDIR /app
+RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
 
-COPY package.json ./
+WORKDIR /home/node/app
 
-RUN npm install
+COPY package.json package-lock.json ./
+
+USER node
+
+RUN npm ci
+
+COPY --chown=node:node src ./src
+COPY --chown=node:node public ./public
 
 EXPOSE 3000
 
-CMD [ "npm", "start" ]
+CMD [ "node", "./src/index.js" ]
