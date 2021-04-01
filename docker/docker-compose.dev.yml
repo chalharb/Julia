@@ -1,0 +1,9 @@
+version: "3.9"
+services:
+  api:
+    container_name: julia_api
+    build: ../api
+    volumes:
+      - ../api:/home/node/api
+    environment:
+      - NODE_ENV=development

@@ -1,0 +1,7 @@
+version: "3.9"
+services:
+  api:
+    container_name: julia_api
+    build: ../api
+    ports:
+      - ${API_PORT}:3000
